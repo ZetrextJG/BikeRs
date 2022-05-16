@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import requests
 import re
-import os.path
+from os import path, makedirs
 from tqdm import tqdm
 
 # Important urls
@@ -12,6 +12,18 @@ download_url = "https://s3.amazonaws.com/tripdata/"
 # Seting up regex for needed files
 key_regex = r"<Key>([\d\w\-\.]+.zip)</Key>"
 key_matcher = re.compile(key_regex)
+
+# Check for correct directory stucture
+if not path.exists("./data"):
+    makedirs("./data/JC")
+    makedirs("./data/NC")
+
+if not path.exists("./data/NC"):
+    makedirs("./data/NC")
+
+if not path.exists("./data/JC"):
+    makedirs("./data/JC")
+
 
 # Starting up a http session
 with requests.Session() as sess:
@@ -41,7 +53,7 @@ with requests.Session() as sess:
         filepath = "./data/" + city_code + "/" + key
 
         # Checking if a file doesn't already exists
-        if not os.path.isfile(filepath):
+        if not path.isfile(filepath):
             raw_data = requests.get(download_url + key)
 
             with open(filepath, 'wb') as f:
