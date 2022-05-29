@@ -1,13 +1,25 @@
-# PDU Projekt nr. 3
+# PDU Projekt nr.3
 # 16 maj 2022
-# Automatyczne pobieranie pakietów
+# Automatyczne pobieranie pakietow
 
-
-install.packages(c(
-  "dplyr",
+# List of necessary packages
+package_list <- c(
   "data.table",
   "stringi",
   "microbenchmark",
   "pander",
   "ggplot2",
-))
+  "ggmap",
+  "shiny",
+  "shinydashboard",
+  "tidyverse",
+  "plotly",
+  "igraph"
+)
+
+# Create a list of only missing packages
+missing <- package_list[!(package_list %in% installed.packages()[, "Package"])]
+
+# Download missing packages if any
+if (length(missing)) install.packages(missing,
+                                      repos = "https://cran.uni-muenster.de")
