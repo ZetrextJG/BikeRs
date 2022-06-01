@@ -6,7 +6,6 @@
 package_list <- c(
   "data.table",
   "stringi",
-  "microbenchmark",
   "pander",
   "ggplot2",
   "ggmap",
@@ -14,7 +13,8 @@ package_list <- c(
   "shinydashboard",
   "tidyverse",
   "plotly",
-  "igraph"
+  "leaflet",
+  "rgdal"
 )
 
 # Create a list of only missing packages

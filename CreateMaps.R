@@ -8,22 +8,22 @@ library(tidyverse)
 library(ggmap)
 library(ggplot2)
 
-d1 <- fread("data/NC/202204-citibike-tripdata.csv")
+d1 <- fread("data/NC/202004-citibike-tripdata.csv")
+difftime(d1$ended_at, d1$started_at, units = "mins")
 pander(head(d1))
 
 stations <- d1 %>%
     as.data.frame() %>%
     ungroup() %>%
-    group_by(start_station_name) %>%
+    group_by(`start station name`) %>%
     summarise(
-        start_id = as.numeric(start_station_id[1]),
-        lat = as.numeric(start_lat[1]),
-        long = as.numeric(start_lng[1]),
+        start_id = as.numeric(`start station id`[1]),
+        lat = as.numeric(`start station latitude`[1]),
+        long = as.numeric(`start station longitude`[1]),
         n_trips = n()
     )
 
 ## Map of all the station
-
 new_york_map <- get_map(
     location = "Noho, New York",
     maptype = "roadmap",
@@ -108,7 +108,7 @@ ggmap(new_york_map) +
         size = 2,
         alpha = 0.75
     ) +
-    scale_colour_gradient(high = "red", low = "green") +
+    scale_colour_gradient(high = "red", low = "green", name = "Number of trips") +
     theme(axis.ticks = element_blank(), axis.text = element_blank()) +
     xlab("") +
     ylab("")
